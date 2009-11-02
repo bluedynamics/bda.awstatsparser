@@ -11,7 +11,7 @@ SECTIONDEFS = {
     'VISITOR': ['host', 'pages', 'hits', 'bandwidth', 'last visit date', 'start date of last visit', 'last page of last visit'],            
     'DAY': ['date', 'pages', 'hits', 'bandwidth', 'visits'],
     'DOMAIN': ['domain', 'pages', 'hits', 'bandwidth'],
-    'LOGIN': ['cluster id', 'pages', 'hits', 'bandwidth'],
+    'LOGIN': ['cluster id', 'pages', 'hits', 'bandwidth', 'last visit date'],
     'ROBOT': ['robot id', 'hits', 'bandwidth', 'last visit', 'hits on robots.txt'],     
     'WORMS': ['worm id', 'hits', 'bandwidth', 'last visit'],     
     'EMAILSENDER': ['email', 'hits', 'bandwidth', 'last visit'],   
