@@ -1,10 +1,12 @@
-"""Defines AWStats default sections."""
+# -*- coding: utf-8 -*-
+# Copyright (c) 2006, 2010 by Blue Dynamics Alliance
 
 PREFIX = 'awstats'
 POSTFIX= 'txt'
 
+# Defines AWStats default sections:
+#     'SECTION': [meaning of key, names for values or None to keep it a list]
 SECTIONDEFS = {
-    # 'SECTION': [meaning of key, names for values or None to keep it a list]
     'MAP' : ['section', 'offset'],
     'GENERAL': ['key', None],
     'TIME': ['hour', 'pages', 'hits', 'bandwidth', 'not viewed pages', 'not viewed hits', 'not viewed bandwidth'],
@@ -33,4 +35,4 @@ SECTIONDEFS = {
     'ERRORS': ['errors', 'hits', 'bandwidth'],       
     'CLUSTER': ['cluster id', 'pages', 'hits', 'bandwidth'],      
     'SIDER_404': ['urls with 404 errors', 'hits', 'last url referer'],
-} 
+}

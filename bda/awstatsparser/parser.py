@@ -1,35 +1,16 @@
 # -*- coding: utf-8 -*-
-#
-# Copyright (c) 2006 by Blue Dynamics Alliance Klein und Partner KEG Austria
-#
-# GNU General Public License (GPL)
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-# 02110-1301, USA.
-#
-
-__author__ = """Jens Klein <jens@bluedynamics.com>
-                Robert Niederreiter <robertn@bluedynamcis.net>"""
-__docformat__ = 'plaintext'
+# Copyright (c) 2006, 2010 by Blue Dynamics Alliance
 
 import os, sys
 from utils import odict
 import defaults
+import logging
+
+logger = logging.getLogger('bda.awstatsparser')
 
 class ParsedSection(odict):
-    """An ordered dict with integrated section parser."""
+    """An ordered dict with integrated section parser.
+    """
     
     def parse(self, rawdata, definition=None):  
         self.definiton = definition    
@@ -49,10 +30,12 @@ class ParsedSection(odict):
             
 
 class ParsedMonth(dict):
-    """An dict with integrated month parser. The key is the section name."""
+    """An dict with integrated month parser. The key is the section name.
+    """
         
     def parse(self, data, sectiondefs):
-        """parses data and build sections"""
+        """parses data and build sections.
+        """
         data = data.split('\n')
         sname = None
         for i in range(0, len(data)-1):
@@ -70,7 +53,8 @@ class ParsedMonth(dict):
             
 class ParsedStatistics(dict):
     """An dicts with integrated statistics parser. Keys are MMYYYY. it parses 
-    the file on-demand."""
+    the file on-demand.
+    """
     
     def __init__(self, site, 
                  location, 
@@ -87,28 +71,57 @@ class ParsedStatistics(dict):
         self.postfix = postfix
         self.sectiondefs = sectiondefs
     
+    @property
+    def available(self):
+        """List of available parsed stats keys.
+        """
+        ret = list()
+        try:
+            for file in os.listdir(self.location):
+                if file.startswith(self.prefix) \
+                  and file.endswith(self.postfix) \
+                  and file.find(self.site) != -1:
+                    idx = len(self.prefix)
+                    ret.append(file[idx:idx + 6])
+        except OSError, e:
+            logger.error(str(e))
+        return ret
+    
+    @property
+    def latest(self):
+        """Latest parsed stats key.
+        """
+        available = [(a[2:], a[:2]) for a in self.available]
+        if not available:
+            logger.warning("No parsed files found.")
+            return None
+        available = sorted(available, key=lambda x: (x[0], x[1]))
+        return '%s%s' % (available[-1][1], available[-1][0])
+    
     def parseLogFile(self, my):
         """Parse a logfile from location on disk.
         
-           my = month+year MMYYYY as string.
+        @param my: month+year MMYYYY as string.
         """         
         filename = "%s%s.%s.%s" % (self.prefix, my, self.site, self.postfix)
         filename = os.path.join(self.location, filename)
         if not os.path.isfile(filename):
-            print "%s does not exist" % filename
+            logger.error("%s does not exist" % filename)
             return None
         f = open(filename)
         data = f.read()
         f.close()
         self[my] = ParsedMonth()
-        self[my].parse(data, self.sectiondefs)
-            
+        self[my].parse(data, self.sectiondefs)    
     
     def __getitem__(self, my):
-        """"my = month+year MMYYYY as string."""
+        """@param my: month+year MMYYYY as string.
+        """
         if not my in self:
             self.parseLogFile(my)
         return self.get(my)
+    
+    __repr__ = object.__repr__
 
 if __name__ == '__main__':
     from pprint import pprint
