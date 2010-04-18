@@ -56,7 +56,7 @@ Changes
   * added logger and log some warnings and errors. 2010-01-26 - rnix
 
 1.1
-  * released on pypi ????-??-?? - jensens
+  * released on pypi 2007-11-05 - jensens
 
 1.0
   * initial work - rnix, jensens
