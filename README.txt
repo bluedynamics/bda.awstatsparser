@@ -46,20 +46,23 @@ Access some stats information.
 Changes
 =======
 
+1.2.1 - unreleased
+  * fixed bug "When parsing a section, it leaves off the last line of the 
+    section.". Thanks to Mike Hansen for report and patch. 2010-04-18 - jensens
 
-  * 1.2.0
-    - added ``available`` property 2010-01-26 - rnix
-    - added ``latest`` property 2010-01-26 - rnix
-    - added logger and log some warnings and errors 2010-01-26 - rnix
+1.2.0
+  * added ``available`` property. 2010-01-26 - rnix
+  * added ``latest`` property. 2010-01-26 - rnix
+  * added logger and log some warnings and errors. 2010-01-26 - rnix
 
-  * 1.1
-    - released on pypi ????-??-?? - jensens
+1.1
+  * released on pypi ????-??-?? - jensens
 
-  * 1.0
-    - initial work - rnix, jensens
+1.0
+  * initial work - rnix, jensens
 
 Contributors
 ============
 
-  * Robert Niederreiter <rnix@squarewave.at>
   * Jens Klein <jens@bluedynamics.com>
+  * Robert Niederreiter <rnix@squarewave.at>

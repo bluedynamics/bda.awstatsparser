@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2006, 2010 by Blue Dynamics Alliance
+# Copyright (c) 2006-2010 by BlueDynamics Alliance, Austria
 
 PREFIX = 'awstats'
 POSTFIX= 'txt'

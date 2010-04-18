@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright (c) 2006, 2010 by Blue Dynamics Alliance
+# Copyright (c) 2006-2010 by BlueDynamics Alliance, Austria
 
 import os, sys
 from utils import odict
@@ -45,11 +45,11 @@ class ParsedMonth(dict):
             name, length = line.split()
             name = name[6:]
             i += 1
-            offset = i + int(length) -1
+            offset = i + int(length) 
             rawsection = data[i:offset]
             self[name] = ParsedSection()
             self[name].parse(rawsection, sectiondefs.get(name, None))
-            i += offset + 1
+            i += offset 
             
 class ParsedStatistics(dict):
     """An dicts with integrated statistics parser. Keys are MMYYYY. it parses 
