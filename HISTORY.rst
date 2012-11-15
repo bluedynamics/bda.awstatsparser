@@ -5,6 +5,9 @@ History
 1.2.1dev
 --------
 
+- Remove ``utils.py`` and use ``odict`` package from pypi.
+  [rnix, 2012-11-15]
+
 - Fixed bug "When parsing a section, it leaves off the last line of the 
   section.". Thanks to Mike Hansen for report and patch.
   [jensens, 2010-04-18]
