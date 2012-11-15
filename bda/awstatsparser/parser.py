@@ -1,19 +1,18 @@
-# -*- coding: utf-8 -*-
-# Copyright (c) 2006-2010 by BlueDynamics Alliance, Austria
-
-import os, sys
-from utils import odict
+import os
 import defaults
 import logging
+from odict import odict
+
 
 logger = logging.getLogger('bda.awstatsparser')
+
 
 class ParsedSection(odict):
     """An ordered dict with integrated section parser.
     """
-    
-    def parse(self, rawdata, definition=None):  
-        self.definiton = definition    
+
+    def parse(self, rawdata, definition=None):
+        self.definiton = definition
         for line in rawdata:
             line = line.strip()
             result = line.split()
@@ -27,12 +26,12 @@ class ParsedSection(odict):
                 except IndexError:
                     raise IndexError, 'index %s in %s' % (i, definition)
             self[result[0]] = resultdict
-            
+
 
 class ParsedMonth(dict):
     """An dict with integrated month parser. The key is the section name.
     """
-        
+
     def parse(self, data, sectiondefs):
         """parses data and build sections.
         """
@@ -49,17 +48,18 @@ class ParsedMonth(dict):
             rawsection = data[i:offset]
             self[name] = ParsedSection()
             self[name].parse(rawsection, sectiondefs.get(name, None))
-            i += offset 
-            
+            i += offset
+
+
 class ParsedStatistics(dict):
     """An dicts with integrated statistics parser. Keys are MMYYYY. it parses 
     the file on-demand.
     """
-    
-    def __init__(self, site, 
-                 location, 
-                 prefix=defaults.PREFIX, 
-                 postfix=defaults.POSTFIX, 
+
+    def __init__(self, site,
+                 location,
+                 prefix=defaults.PREFIX,
+                 postfix=defaults.POSTFIX,
                  sectiondefs=defaults.SECTIONDEFS,
                  absolutepath=True):
         dict.__init__(self)
@@ -70,7 +70,7 @@ class ParsedStatistics(dict):
         self.prefix = prefix
         self.postfix = postfix
         self.sectiondefs = sectiondefs
-    
+
     @property
     def available(self):
         """List of available parsed stats keys.
@@ -86,7 +86,7 @@ class ParsedStatistics(dict):
         except OSError, e:
             logger.error(str(e))
         return ret
-    
+
     @property
     def latest(self):
         """Latest parsed stats key.
@@ -97,12 +97,12 @@ class ParsedStatistics(dict):
             return None
         available = sorted(available, key=lambda x: (x[0], x[1]))
         return '%s%s' % (available[-1][1], available[-1][0])
-    
+
     def parseLogFile(self, my):
         """Parse a logfile from location on disk.
-        
+
         @param my: month+year MMYYYY as string.
-        """         
+        """
         filename = "%s%s.%s.%s" % (self.prefix, my, self.site, self.postfix)
         filename = os.path.join(self.location, filename)
         if not os.path.isfile(filename):
@@ -112,16 +112,17 @@ class ParsedStatistics(dict):
         data = f.read()
         f.close()
         self[my] = ParsedMonth()
-        self[my].parse(data, self.sectiondefs)    
-    
+        self[my].parse(data, self.sectiondefs)
+
     def __getitem__(self, my):
         """@param my: month+year MMYYYY as string.
         """
         if not my in self:
             self.parseLogFile(my)
         return self.get(my)
-    
+
     __repr__ = object.__repr__
+
 
 if __name__ == '__main__':
     from pprint import pprint
