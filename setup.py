@@ -5,7 +5,7 @@ from setuptools import (
 )
 
 
-version = '1.2.1htug1'
+version = '1.2.1dev'
 shortdesc = 'Library for parsing of awstats result files'
 longdesc = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 longdesc += open(os.path.join(os.path.dirname(__file__), 'HISTORY.rst')).read()
