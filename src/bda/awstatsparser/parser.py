@@ -15,6 +15,8 @@ class ParsedSection(odict):
         self.definiton = definition
         for line in rawdata:
             line = line.strip()
+            # http://www.jawstats.com/community/thread22
+            line = line.replace('[_+ ]', '[_+]')
             result = line.split()
             if definition is None or definition[1] is None:
                 self[result[0]] = result[1:]

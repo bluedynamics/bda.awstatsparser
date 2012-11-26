@@ -5,6 +5,10 @@ History
 1.2.1dev
 --------
 
+- Fix odd bug appearing for some robots
+  (http://www.jawstats.com/community/thread22)
+  [rnix, 2012-11-26]
+
 - Remove ``utils.py`` and use ``odict`` package from pypi.
   [rnix, 2012-11-15]
 
