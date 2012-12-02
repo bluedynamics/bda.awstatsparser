@@ -2,8 +2,8 @@
 History
 =======
 
-1.2.1dev
---------
+1.2.1
+-----
 
 - Fix odd bug appearing for some robots
   (http://www.jawstats.com/community/thread22)
