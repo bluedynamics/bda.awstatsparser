@@ -1,2 +1,3 @@
 *.pyc
 src/bda.awstatsparser.egg-info
+dist/
